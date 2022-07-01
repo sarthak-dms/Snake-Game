@@ -1,124 +1,3 @@
-// // #include<bits/stdc++.h>
-// #include<iostream>
-// #include<conio.h>
-// #include<windows.h>
-// #include<stdlib.h>
-// using namespace std;
-
-// bool gameOver;
-// const int width = 25;
-// const int height = 25;
-// int x,y,fruitX,fruitY,score;
-// string snakeBody="O";
-
-// enum snakeDirection {STOP,LEFT,RIGHT,UP,DOWN};
-// snakeDirection dir;
-
-// void setUp()
-// {
-//     gameOver=false;
-//     x=width/2;
-//     y=height/2;
-//     fruitX=rand()%width;
-//     fruitY=rand()%height;
-//     dir=STOP;
-// }
-
-// void draw()
-// {
-//     system("CLS");
-//     for(int i=0;i<height;i++){
-//         for(int j=0;j<width;j++){
-//             if(i==0 or i==height-1 or j==0 or j==width-1){
-//                 cout<<"*";
-//             }else if(i==y and j==x){
-//                 cout<<snakeBody;
-//             }else if(i==fruitY and j==fruitX){
-//                 cout<<"$";
-//             }
-//             else{
-//                 cout<<" ";
-//             }
-//         }
-//         cout<<endl;
-//     }
-    
-//     cout<<endl;
-//     cout<<"Score: "<<score;
-// }
-
-// void moveSnake()
-// {
-//     if(_kbhit()){
-//         switch (_getch())
-//         {
-//         case 'a':
-//             dir=LEFT;
-//             break;
-//         case 'd':
-//             dir=RIGHT;
-//             break;
-//         case 'w':
-//             dir=UP;
-//             break;
-//         case 's':
-//             dir=DOWN;
-//             break;
-//         case 'x':
-//             gameOver=true;
-//             break;
-//         }
-//     }
-// }
-
-// void gameLogic()
-// {
-//     switch (dir)
-//     {
-//     case LEFT:
-//         x--;
-//         break;
-//     case RIGHT:
-//         x++;
-//         break;
-//     case UP:
-//         y--;
-//         break;
-//     case DOWN:
-//         y++;
-//         break;
-//     default:
-//         break;
-//     }
-    
-//     if(x==fruitX and y==fruitY){
-//         score++;
-//         fruitX=rand()%width;
-//         fruitY=rand()%height;
-//         snakeBody.push_back('O');
-//     }
-//     if(x==0 or x==width-1 or y==0 or y==height-1){
-//         gameOver=true;
-//     }
-// }
-
-
-// int main()
-// {
-//     setUp();
-//     while(!gameOver){
-//         draw();
-//         moveSnake();
-//         gameLogic();
-        
-//         Sleep(10);
-//     }
-//     return 0;
-// }
-
-
-
-
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
@@ -129,8 +8,8 @@ const int height = 20;
 int x, y, fruitX, fruitY, score;
 int tailX[100], tailY[100];
 int nTail;
-enum eDirecton { STOP = 0, LEFT, RIGHT, UP, DOWN};
-eDirecton dir;
+enum snakeDirection { STOP = 0, LEFT, RIGHT, UP, DOWN};
+snakeDirection dir;
 
 void Setup()
 {
@@ -142,7 +21,7 @@ void Setup()
 	fruitY = rand()%height;
 	score = 0;
 }
-void Draw()
+void builtMap()
 {
 	system("cls"); //system("clear");
 	for (int i = 0; i < width+2; i++)
@@ -186,7 +65,7 @@ void Draw()
 	cout << endl;
 	cout << "Score:" << score << endl;
 }
-void Input()
+void moveSnake()
 {
 	if (_kbhit())
 	{
@@ -210,7 +89,7 @@ void Input()
 		}
 	}
 }
-void Logic()
+void gameLogic()
 {
 	int prevX = tailX[0];
 	int prevY = tailY[0];
@@ -245,6 +124,7 @@ void Logic()
 	}
 	if (x > width || x < 0 || y > height || y < 0)
 		gameOver = true;
+    
 	if (x >= width) x = 0; else if (x < 0) x = width - 1;
 	if (y >= height) y = 0; else if (y < 0) y = height - 1;
 
@@ -265,10 +145,11 @@ int main()
 	Setup();
 	while (!gameOver)
 	{
-		Draw();
-		Input();
+		builtMap();
+		moveSnake();
 		Logic();
-		Sleep(10); //sleep(10);
+        
+		Sleep(10);
 	}
 	return 0;
 }
